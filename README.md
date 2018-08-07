@@ -89,9 +89,10 @@ cloud.
     1. [Install strongSwan on ICP](#install-strongswan-on-icp)
 1. [Setup Kubeconfig](#3-setup-kubeconfig)
 1. [Setup Watson Tone Analyzer with IBM Cloud](#4-setup-watson-tone-analyzer-with-ibm-cloud)
-1. [Configure](#5-configure)
-1. [Install](#6-install)
-1. [Verify](#7-verify)
+1. [Download Istio](#5-download-istio)
+1. [Configure](#6-configure)
+1. [Install](#7-install)
+1. [Verify](#8-verify)
 
 ## 1. Clone the repo
 
@@ -213,7 +214,11 @@ $ kubectl get nodes --context=<cluster_ICP_context>
  
 > Save the **username** and **password** for your `config.sh` file in the next step.
 
-## 5. Configure
+## 5. Download Istio
+
+[Download Istio v1.0.0](https://github.com/istio/istio/releases) for your platform and extract to your location of choice.
+
+## 6. Configure
 
 Edit the `config.sh` file with the necessary settings:
 
@@ -227,9 +232,12 @@ CLUSTER_B=<cluster_ICP_context>
 # Watson Tone Analyzer service credentials
 TONE_ANALYZER_USERNAME="username"
 TONE_ANALYZER_PASSWORD="password"
+
+# Istio v1.0.0 folder path
+ISTIO_DIR="<PATH_TO>/istio-1.0.0"
 ```
 
-## 6. Install
+## 7. Install
 
 Execute the installation script:
 
@@ -246,7 +254,7 @@ $ kubectl get pods -n istio-system --context=<cluster_ICP_context>
 
 The script continues and the Guestbook web page URL will be printed at the end. You can open this URL in your browser.
 
-## 7. Verify
+## 8. Verify
 
 If the integration between the two clusters has been established you should see the _Tone Analyzer_ service response added in the form of text emoticons to the Guestbook history.
 

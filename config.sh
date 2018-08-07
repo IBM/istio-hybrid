@@ -1,9 +1,12 @@
 # Cluster A Kubeconfig context
-CLUSTER_A="Istio"
+CLUSTER_A="cluster-IKS-context"
 
 # Cluster B Kubeconfig context
-CLUSTER_B="cluster.local-context"
+CLUSTER_B="cluster-ICP-context"
 
 # Watson Tone Analyzer service credentials
-TONE_ANALYZER_USERNAME="b01802b8-7860-4707-9e21-b2407f890501"
-TONE_ANALYZER_PASSWORD="0C35gdtNw3Wm"
+TONE_ANALYZER_USERNAME="username"
+TONE_ANALYZER_PASSWORD="password"
+
+# Istio v1.0.0 folder path
+ISTIO_DIR="<PATH_TO>/istio-1.0.0"

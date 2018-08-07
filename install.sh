@@ -9,13 +9,13 @@ setup_istio()
 {
     # Cluster A
     # Install Istio
-    kubectl apply -f istio-1.0.0/istio-demo.yaml --context=$CLUSTER_A
+    kubectl apply -f $ISTIO_DIR/install/kubernetes/istio-demo.yaml --context=$CLUSTER_A
     # Install CoreDNS
     kubectl apply -f cluster-admin/coredns.yaml --context=$CLUSTER_A
     
     # Cluster B
     # Install Istio
-    kubectl apply -f istio-1.0.0/istio-demo.yaml --context=$CLUSTER_B
+    kubectl apply -f $ISTIO_DIR/install/kubernetes/istio-demo.yaml --context=$CLUSTER_B
     # Install CoreDNS
     kubectl apply -f cluster-admin/coredns.yaml --context=$CLUSTER_B
 }
@@ -47,12 +47,12 @@ install_app()
 
     for yaml in app/cluster-a/*.yaml
     do
-        kubectl apply --context=$CLUSTER_A -f <(istioctl kube-inject -f $yaml)
+        kubectl apply --context=$CLUSTER_A -f <($ISTIO_DIR/bin/istioctl kube-inject -f $yaml)
     done
 
     for yaml in app/cluster-b/*.yaml
     do
-        kubectl apply --context=$CLUSTER_B -f <(istioctl kube-inject --context $CLUSTER_B \
+        kubectl apply --context=$CLUSTER_B -f <($ISTIO_DIR/bin/istioctl kube-inject --context $CLUSTER_B \
                 -f <(sed -e "s/__TONE_ANALYZER_USERNAME__/$TONE_ANALYZER_USERNAME/g" \
                 -e "s/__TONE_ANALYZER_PASSWORD__/$TONE_ANALYZER_PASSWORD/g" $yaml))
     done
