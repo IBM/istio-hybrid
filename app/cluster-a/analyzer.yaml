@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: analyzer
+  labels:
+    app: analyzer
+spec:
+  ports:
+  - port: 80
+    name: http
+  selector:
+    app: analyzer
+---
+# inside of the mesh, redirect "analyzer" to analyzer.svc.b.remote
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: analyzer
+spec:
+  gateways:
+  - mesh
+  hosts:
+  - analyzer.default.svc.cluster.local
+  http:
+  - rewrite:
+      # do the header re-write so we can ingress via host
+      authority: analyzer.svc.b.remote
+    route:
+    - destination:
+        host: ingress.b.remote
+        port:
+          number: 80
+      weight: 100

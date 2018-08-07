@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: analyzer
+  labels:
+    app: analyzer
+spec:
+  selector:
+    matchLabels:
+      app: analyzer
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: analyzer
+    spec:
+      containers:
+      - name: analyzer
+        image: ibmcom/analyzer:v1
+        imagePullPolicy: Always
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+        env:
+        - name: VCAP_SERVICES_TONE_ANALYZER_0_CREDENTIALS_USERNAME
+          value: __TONE_ANALYZER_USERNAME__
+        - name: VCAP_SERVICES_TONE_ANALYZER_0_CREDENTIALS_PASSWORD
+          value: __TONE_ANALYZER_PASSWORD__
+        - name: USE_HTTPS
+          value: "True"
+        ports:
+        - containerPort: 5000
+          name: http
