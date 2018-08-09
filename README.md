@@ -266,23 +266,30 @@ Sample result:
 
 ![](doc/images/Screenshot.png)
 
+# Cleanup
+
+Steps below will uninstall the demo app, Istio and it's cross-cluster configuration and strongSwan.
+1. Uninstall the Guestbook demo app and Istio:
+    ```command
+    $ ./cleanup.sh
+    ```
+1. Uninstall strongSwan from ICP by logging into the ICP Management Console and then navigate to `Menu`→`Workloads`→`Helm Releases`. Look for `vpn` and from the `Action` menu choose `Delete`
+1. Uninstall strongSwan from IKS by executing:
+    ```command
+    $ helm delete --purge vpn
+    ```
+
 <!--Include any troubleshooting tips (driver issues, etc)-->
 
-<!-- # Troubleshooting
+# Troubleshooting
 
-* Error: Environment {GUID} is still not active, retry once status is active
+* Error: the server doesn't have a resource type "nodes"
 
-  > This is common during the first run. The app tries to start before the Discovery
-environment is fully created. Allow a minute or two to pass. The environment should
-be usable on restart. If you used `Deploy to IBM Cloud` the restart should be automatic.
+  > If you get this kind of error on any `kubectl get` with the ICP context then your session is probably expired. Log into the ICP management console and from the user menu choose `Configure Client` to reconfigure your Kubeconfig with a valid context.
 
-* Error: Only one free environent is allowed per organization
+* Error from server (NotFound): error when deleting ... not found
 
-  > To work with a free trial, a small free Discovery environment is created. If you already have
-a Discovery environment, this will fail. If you are not using Discovery, check for an old
-service thay you may want to delete. Otherwise use the .env DISCOVERY_ENVIRONMENT_ID to tell
-the app which environment you want it to use. A collection will be created in this environment
-using the default configuration. -->
+  > If you get these errors when running the `cleanup.sh` then you can ignore those as the resources have been already deleted when removing the Istio namespace earlier in the script.
 
 <!--Include any relevant links-->
 
